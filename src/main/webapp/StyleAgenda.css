@@ -15,6 +15,9 @@
     animation-duration: 2s;
     
 } 
+
+
+
 /* Elementos com o ID "subtitulo" */
 #subtitulo {
     font-family: sans-serif;
@@ -77,8 +80,14 @@ input, select, textarea, button {
     justify-content: center;
     animation-name: fade;
     animation-duration: 1s;
-    
 }
+
+
+#tabela table{
+	margin-right: 35%;
+}
+
+
 
 /* Elementos de classe "campo" de tag <label> */
 .campo label {

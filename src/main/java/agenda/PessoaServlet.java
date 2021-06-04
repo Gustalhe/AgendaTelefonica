@@ -1,24 +1,31 @@
 package agenda;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/enviar") // pode ser um vetor de strings com varias /nome, /nome
-public class PessoaServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/","/pessoa", "/enviar",}) // pode ser um vetor de strings com varias /nome, /nome
+public class PessoaServlet extends HttpServlet{
 
-	//public static List<ModelPessoa> listaPessoas = new ArrayList<ModelPessoa>();
+	
+	public static List listaPessoas = new ArrayList<ModelPessoa>();
 	
 	public static ModelPessoa modelPessoa = new ModelPessoa();
 	
 
-	
 	public PessoaServlet() {
 		//chamado somente quando é construido pela primeira vez o servlet
 		System.out.println("Construindo Servlet...");
@@ -45,12 +52,27 @@ public class PessoaServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// para mostrar uma mensagem ao usuario, pagina carregada pelo servlet
+		
+		//esse objeto ele permite configurar um objeto de encaminhamento, capaz de encaminhar a requisição
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("pessoa.jsp"); //faz encaminhamento do fluxo
 
 		
-		// para mostrar uma mensagem ao usuario
-		resp.getWriter().print("Chamou no método Get");
+		
+		ConexaoMySQL conexao = new ConexaoMySQL();
+		conexao.consultar();
+		
 
-		// System.out.println("chamou no método get chamaaaaa");
+		
+			if(modelPessoa.getNumero1() != null || !listaPessoas.isEmpty()) {
+				req.setAttribute("cadastros", listaPessoas);	
+			}
+				
+	
+		
+		requestDispatcher.forward(req, resp);
+		
 	}
 
 	@Override
@@ -65,6 +87,10 @@ public class PessoaServlet extends HttpServlet {
 		String numero3 = req.getParameter("telefone3"); 
 		String parentesco = req.getParameter("opcao");
 		
+		if(parentesco == null) {
+			parentesco = "";
+		}
+		
 		
 		modelPessoa.setNome(nomeCadastro);
 		modelPessoa.setSobrenome(sobrenomeCadastro);
@@ -76,8 +102,6 @@ public class PessoaServlet extends HttpServlet {
 		
 		
 		
-		//listaPessoas.add(modelPessoa);
-		
 		//iniciar objeto da classe que realmente faz a conexão com o sgbd
 		ConexaoMySQL conexao = new ConexaoMySQL();
 		conexao.conectar();
@@ -85,9 +109,9 @@ public class PessoaServlet extends HttpServlet {
 		
 		
 		// para mostrar uma mensagem ao usuario
-		resp.getWriter().print("Chamou no método Post e enviou o parentesco ao server: "+parentesco);
+		resp.getWriter().print("O contato "+nomeCadastro+" foi cadastrado com sucesso!!");
 
-		// System.out.println("Chamou no método Post chamaaaa");
+		
 	}
 
 	@Override
