@@ -2,6 +2,7 @@ package agenda;
 
 import java.security.PublicKey;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class ConexaoMySQL {
 
@@ -19,12 +19,12 @@ public class ConexaoMySQL {
 	PessoaServlet pessoaServlet = new PessoaServlet();
 	
 	public void conectar() {
-
-			
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
+			System.out.println("Erro no driver SQL ");
 		}
 
 		try {
@@ -36,7 +36,7 @@ public class ConexaoMySQL {
 			PessoaServlet pessoaServlet = new PessoaServlet();
 					
 			String insert = "INSERT INTO tbAgenda(nome, sobrenome, dataNac, numero1, numero2, numero3, parentesco) VALUES(?,?,?,?,?,?,?)";
-			
+			System.out.println("teste2 ");
 			PreparedStatement stmt = conn.prepareStatement(insert);  
 			
 			stmt.setString(1, pessoaServlet.modelPessoa.getNome());

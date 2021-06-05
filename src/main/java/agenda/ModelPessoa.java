@@ -1,5 +1,7 @@
 package agenda;
 
+import java.util.Date;
+
 public class ModelPessoa {
 
 	private String nome;
@@ -10,6 +12,13 @@ public class ModelPessoa {
 	private String numero3;
 	private String parentesco;
 	
+
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -22,12 +31,7 @@ public class ModelPessoa {
 	public void setSobrenome(String lastName) {
 		sobrenome = lastName;
 	}
-	public String getDataNascimento() {
-		return dataNascimento;
-	}
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+	
 	public String getNumero1() {
 		return numero1;
 	}
@@ -52,6 +56,7 @@ public class ModelPessoa {
 	public void setParentesco(String parentesco) {
 		this.parentesco = parentesco;
 	}
+	
 	
 }
 

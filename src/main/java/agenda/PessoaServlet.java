@@ -2,11 +2,13 @@ package agenda;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/","/pessoa", "/enviar",}) // pode ser um vetor de strings com varias /nome, /nome
+@WebServlet(urlPatterns = {"/","/pessoa", "/enviar","/atualizar"}) // pode ser um vetor de strings com varias /nome, /nome
 public class PessoaServlet extends HttpServlet{
 
 	
@@ -81,17 +83,28 @@ public class PessoaServlet extends HttpServlet{
 			
 		String nomeCadastro = req.getParameter("nome");
 		String sobrenomeCadastro = req.getParameter("sobrenome");
-		String dataNascimento = req.getParameter("data");
 		String numero1 = req.getParameter("telefone1");
 		String numero2 = req.getParameter("telefone2");
 		String numero3 = req.getParameter("telefone3"); 
 		String parentesco = req.getParameter("opcao");
 		
 		if(parentesco == null) {
-			parentesco = "";
+			parentesco="";
 		}
 		
 		
+		String dataNascimento = req.getParameter("data");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			Date dataFormatada = (Date)sdf.parse(dataNascimento);
+			sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			dataNascimento = sdf.format(dataFormatada);
+		} catch (ParseException e) {
+			System.out.println("Erro ao converter a data!");
+		}
 		modelPessoa.setNome(nomeCadastro);
 		modelPessoa.setSobrenome(sobrenomeCadastro);
 		modelPessoa.setDataNascimento(dataNascimento);
@@ -100,17 +113,25 @@ public class PessoaServlet extends HttpServlet{
 		modelPessoa.setNumero2(numero2);
 		modelPessoa.setNumero3(numero3);
 		
-		
+		System.out.println("teste1 "+modelPessoa.getNome());
 		
 		//iniciar objeto da classe que realmente faz a conexão com o sgbd
 		ConexaoMySQL conexao = new ConexaoMySQL();
+		//fazer o insert no banco
 		conexao.conectar();
 		
-		
+		RequestDispatcher requestDispatcher = req.getRequestDispatcher("CadastroConcluido.jsp"); //faz encaminhamento do fluxo
+		requestDispatcher.forward(req, resp);
 		
 		// para mostrar uma mensagem ao usuario
-		resp.getWriter().print("O contato "+nomeCadastro+" foi cadastrado com sucesso!!");
-
+		//resp.getWriter().print("O contato "+nomeCadastro+" foi cadastrado com sucesso!!");	
+		
+		
+		//recarrega a pagina e mostra inserido o novo cadastro na tabela
+		//doGet(req, resp);
+		
+					
+	
 		
 	}
 

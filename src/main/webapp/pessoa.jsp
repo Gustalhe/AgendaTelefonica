@@ -5,8 +5,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	<style type="text/css">
 	
 	/* Todos os elementos da página */
@@ -37,18 +36,21 @@
 
 table{
     text-align: center;
-	margin-left: 30%;
+	margin-left: 31%;
 	border-color: #F0F8FF;
 	margin-top: 2%;
-	
-	
+	animation-name: fade;
+    animation-duration: 2s;
+	overflow: scroll;
 }
 
 table, td {
-     border: 1px solid rgb(90, 90, 90);
+     border: 2px solid rgb(90, 90, 90);
 }
 tr:nth-child(even) {background-color: #f2f2f2}
-
+td{
+	padding: 5px;
+}
 
 #check{
     display: inline-block;
@@ -107,7 +109,6 @@ input, select, textarea, button {
 
 #formulario{
 	margin-left: 40%;
-
 }
 
 /* Elementos de classe "campo" de tag <label> */
@@ -153,7 +154,7 @@ fieldset.grupo .campo {
 }
 
 /* Elemento de classe "botao" */
-.botao {
+#botaoEnviar {
     font-size: 1.2em;
     background: #59429d;
     border: 0;
@@ -163,25 +164,50 @@ fieldset.grupo .campo {
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
     text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     position: absolute;
-    top: 43%;
+    top: 42%;
     left: 51%;
     animation-name: fadebotao;
-    animation-duration: 4s;
+    animation-duration: 3s;
+    margin-right: -50%;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+#botaoAtualizar{
+ font-size: 1.2em;
+    background: #59429d;
+    border: 0;
+    margin-bottom: 1em;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 0.2em 0.6em;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    position: absolute;
+    top: 42%;
+    left: 67%;
+    animation-name: fadebotao;
+    animation-duration: 3s;
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
 
 /* Elemento de classe "botao" com o estado da pseudoclasse "hover" */
-.botao:hover {
+#botaoEnviar:hover {
     background: #CCBBFF;
     box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2);
     text-shadow: none;
 }
 
-/* Elementos de classe botão e de tag <select> */
-.botao, select{
-    cursor: pointer;
+
+
+#botaoAtualizar:hover{
+	background: #CCBBFF;
+    box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2);
+    text-shadow: none;
+
 }
+
 #check{
     display: inline-block;
 }
@@ -244,46 +270,46 @@ fieldset.grupo .campo {
 		<fieldset class="grupo">
 
 			<div class="campo">
-				<label for="telefone"><strong>Número:</strong></label> <input
-					type="phone" name="telefone1" required>
+				<label for="telefone"><strong>Número:</strong></label> <input type="phone" pattern="[0-9]+$" name="telefone1" required>
 			</div>
 
 			<div class="campo">
-				<label for="dataNaascimento"><strong>Data de
-						Nascimento:</strong></label> <input type="date" name="data" id="data" required>
+				<label for="dataNaascimento"><strong>Data deNascimento:</strong></label> 
+				<input type="date" name="data" id="data" required>
 			</div>
 
 		</fieldset>
 
 		<fieldset class="grupo">
 			<div class="campo">
-				<label for="telefone"><strong>Número 2:</strong></label> <input
-					type="phone" name="telefone2">
+				<label for="telefone"><strong>Número 2:</strong></label> <input type="phone" pattern="[0-9]+$" name="telefone2">
 			</div>
 
 			<div class="campo">
-				<label for="telefone"><strong>Número 3:</strong></label> <input
-					type="phone" name="telefone3">
+				<label for="telefone"><strong>Número 3:</strong></label> <input type="phone" pattern="[0-9]+$" name="telefone3">
 			</div>
 		</fieldset>
 
 		<div class="campo">
 			<label> <strong>Qual o grau de parentesco?</strong> </label>
 			 
-			<label> <input type="radio" name="opcao" value="maePai" id="opcao">Mãe/Pai</label> 
+			<label> <input type="radio" name="opcao" value="Mae/Pai" id="opcao">Mãe/Pai</label> 
 			
-			<label> <input type="radio" name="opcao" value="filhos" id="opcao">Filho/Filha</label> 
+			<label> <input type="radio" name="opcao" value="Filho(a)" id="opcao">Filho(a)</label> 
 			
-			<label> <input type="radio" name="opcao" value="avos" id="opcao">Avô/Avó</label> 
+			<label> <input type="radio" name="opcao" value="Avôs" id="opcao">Avô/Avó</label> 
 			
-			<label> <input type="radio" name="opcao" value="outro" id="opcao">Outro</label>
+			<label> <input type="radio" name="opcao" value="Outro" id="opcao">Outro</label>
 		</div>
 
 		<div id="sobotao">
-			<button class="botao" type="submit" onsubmit="">Concluído</button>
+			<button id="botaoEnviar" type="submit" onsubmit="">Concluído</button>
+			
 		</div>
-
 	</form>
+	
+	
+	<button id="botaoAtualizar" onclick="window.location.reload()"  type="button">Atualizar</button>
 
 
 	
@@ -316,9 +342,7 @@ fieldset.grupo .campo {
 		
 		for(ModelPessoa mp: lista){
 			if(lista != null){
-				
-	
-				
+							
 				out.print("<tr>"+ 
 							"<td>"+mp.getNome()+"</td>"+ 
 							"<td>"+mp.getSobrenome()+"</td>"+ 
@@ -327,15 +351,10 @@ fieldset.grupo .campo {
 							"<td>"+mp.getNumero1()+"</td>"+
 							"<td>"+mp.getNumero2()+"</td>"+
 							"<td>"+mp.getNumero3()+"</td>"+
-						"</tr>");	
-
-				
+						"</tr>");		
 			}
 		}
-	
-	
 	}else{
-		//out.print("<table border='1'><tr><td><strong> Nome: </strong></td></tr></table>");
 		
 	}
 	
