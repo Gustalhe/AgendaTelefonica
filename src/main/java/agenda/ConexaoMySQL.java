@@ -16,14 +16,15 @@ public class ConexaoMySQL {
 
 	//public List<ModelPessoa> lista = new ArrayList<ModelPessoa>();
 	PessoaServlet pessoaServlet = new PessoaServlet();
-
+	static ModelPessoa modelPessoaIndice = new ModelPessoa();
+	
 	public void conectar() {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
-			System.out.println("Erro no driver SQL ");
+			System.out.println("Erro ao conectar o driver SQL");
 		}
 
 		try {
@@ -62,7 +63,7 @@ public class ConexaoMySQL {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+			System.out.println("Erro ao conectar o driver SQL");
 		}
 
 		try {
@@ -94,10 +95,13 @@ public class ConexaoMySQL {
 				pessoaServlet.listaPessoas.add(modelPessoa);
 
 				/*
-				 * System.out.println("Id: " + id); System.out.println("Nome: " + nome);
-				 * System.out.println("sobrenome: " + sobrenome); System.out.println("N1: " +
-				 * numero1); System.out.println("N2: " + numero2); System.out.println("N3: " +
-				 * numero3); System.out.println("parentesco: " + parentesco );
+				 * System.out.println("Id: " + id); 
+				 * System.out.println("Nome: " + nome);
+				 * System.out.println("sobrenome: " + sobrenome); 
+				 * System.out.println("N1: " + numero1); 
+				 * System.out.println("N2: " + numero2); 
+				 * System.out.println("N3: " + numero3); 
+				 * System.out.println("parentesco: " + parentesco );
 				 * System.out.println("Data de nascimento: " + dataNascimento);
 				 */
 
@@ -117,7 +121,7 @@ public class ConexaoMySQL {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
+			System.out.println("Erro ao conectar o driver SQL");
 		}
 
 		try {
@@ -133,5 +137,85 @@ public class ConexaoMySQL {
 		}
 
 	}
+
+	public static ModelPessoa buscaIndice(int indice) {
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Erro ao conectar o driver SQL");
+		}
+
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbAgenda", "root", "");
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery("SELECT * FROM tbAgenda where id="+indice);
+
+			while (rs.next()) {
+				
+				String nome = rs.getString("nome");
+				String sobrenome = rs.getString("sobrenome");
+				String dataNascimento = rs.getString("dataNac");
+				String numero1 = rs.getString("numero1");
+				String numero2 = rs.getString("numero2");
+				String numero3 = rs.getString("numero3");
+				String parentesco = rs.getString("parentesco");
+
+				modelPessoaIndice.setId(indice);
+				modelPessoaIndice.setNome(nome);
+				modelPessoaIndice.setSobrenome(sobrenome);
+				modelPessoaIndice.setDataNascimento(dataNascimento);
+				modelPessoaIndice.setNumero1(numero1);
+				modelPessoaIndice.setNumero2(numero2);
+				modelPessoaIndice.setNumero3(numero3);
+				modelPessoaIndice.setParentesco(parentesco);
+
+			}
+			stm.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao conectar com o banco de dados");
+		}
+		
+		
+		return null;
+	}
+	
+	public void atualizar() {
+	
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Erro ao conectar o driver SQL");
+		}
+		
+		try {
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbAgenda", "root", "");
+			Statement stm = conn.createStatement();
+
+			String sql = "UPDATE tbAgenda SET nome = '" + modelPessoaIndice.getNome() + "',"+
+					" sobrenome='"+modelPessoaIndice.getSobrenome()+"',"
+					+ " dataNac='"+modelPessoaIndice.getDataNascimento()+"',"
+					+ " numero1='"+modelPessoaIndice.getNumero1()+"',"
+					+ " numero2='"+modelPessoaIndice.getNumero2()+"',"
+					+ " numero3='"+modelPessoaIndice.getNumero3()+"',"
+					+ " parentesco='"+modelPessoaIndice.getParentesco()+"'"
+					+ " where id = "+modelPessoaIndice.getId()+";";
+            
+			System.out.println(sql);
+			stm.executeUpdate(sql); 
+			
+			
+			stm.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao conectar com o banco de dados");
+		}
+		
+	}
+	
+	
 
 }
