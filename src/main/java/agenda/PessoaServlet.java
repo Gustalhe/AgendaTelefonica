@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { "/", "/excluir", "/enviar", "/atualizar","/editar" }) // pode ser um vetor de strings com varias
-																		// /nome, /nome
 public class PessoaServlet extends HttpServlet {
 
 	public static List listaPessoas = new ArrayList<ModelPessoa>();
@@ -31,37 +30,28 @@ public class PessoaServlet extends HttpServlet {
 	
 	public PessoaServlet() {
 		// chamado somente quando é construido pela primeira vez o servlet
-		System.out.println("Construindo Servlet...");
 	}
 
 	@Override
 	public void init() throws ServletException {
 		// chamado somente quando é construido pela primeira vez o servlet
-		System.out.println("Inicializando Servlet");
 		super.init();
 	}
 
 	// método mais genérico que recebe o request e response
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		// apartir daqui que ele decide que vai para o método do get ou do post...
-		System.out.println("Chamando o Service...");
-
-		// esse faz o tratamento direto para ser post ou get:
+		// apartir daqui que ele decide que vai para o método do get ou do post... esse faz o tratamento direto para ser post ou get:
 		super.service(req, resp);
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// para mostrar uma mensagem ao usuario, pagina carregada pelo servlet
-
 		String i = req.getParameter("i");
 		String act = req.getParameter("act");
 		
-		System.out.println("String ação act: "+act);
-		
+
 		
 		if(i != null && i != "" && act != null && act !="") {
 			if(act.equals("excluir")) {
@@ -70,8 +60,6 @@ public class PessoaServlet extends HttpServlet {
 				RequestDispatcher requestDispatcher = req.getRequestDispatcher("ExcluidoConcluido.jsp"); // faz encaminhamento do fluxo			
 				i = null;
 				requestDispatcher.forward(req, resp);
-				
-				
 			}else if(act.equals("editar")) {
 				int indice = Integer.parseInt(i);
 				ConexaoMySQL.buscaIndice(indice);
@@ -80,7 +68,6 @@ public class PessoaServlet extends HttpServlet {
 			}
 
 		}
-		
 			// esse objeto ele permite configurar um objeto de encaminhamento, capaz de
 			// encaminhar a requisição
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher("AgendaMain.jsp"); // faz encaminhamento do fluxo
@@ -157,7 +144,6 @@ public class PessoaServlet extends HttpServlet {
 			 ConexaoMySQL.modelPessoaIndice.setParentesco(parentesco);
 			 ConexaoMySQL.modelPessoaIndice.setDataNascimento(dataNascimento);
 			 conexao.atualizar();
-			 System.out.println("Passou no atualizar!");
 			 editar = false;
 			 
 			 RequestDispatcher requestDispatcher = req.getRequestDispatcher("EditadoConcluido.jsp"); // faz encaminhamento do fluxo
@@ -169,22 +155,20 @@ public class PessoaServlet extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		// para mostrar uma mensagem ao usuario
-		resp.getWriter().print("Chamou no método Delete");
+		//resp.getWriter().print("Chamou no método Delete");
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		// para mostrar uma mensagem ao usuario
-		resp.getWriter().print("Chamou no método Put");
+		///resp.getWriter().print("Chamou no método Put");
 	}
 
 	// Momento que o servlet vai ser destruido e deixar de existir
 	@Override
 	public void destroy() {
-		System.out.println("Servlet está sendo destruido");
+		//System.out.println("Servlet está sendo destruido");
 		super.destroy();
 	}
 

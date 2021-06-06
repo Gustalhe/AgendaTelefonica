@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConexaoMySQL {
-
-	//public List<ModelPessoa> lista = new ArrayList<ModelPessoa>();
+	
 	PessoaServlet pessoaServlet = new PessoaServlet();
 	static ModelPessoa modelPessoaIndice = new ModelPessoa();
 	
@@ -29,9 +28,6 @@ public class ConexaoMySQL {
 
 		try {
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbAgenda", "root", "");
-
-			// Statement stm = conn.createStatement();
-			// stm.executeUpdate(insert);
 
 			PessoaServlet pessoaServlet = new PessoaServlet();
 
@@ -91,20 +87,7 @@ public class ConexaoMySQL {
 				modelPessoa.setNumero2(numero2);
 				modelPessoa.setNumero3(numero3);
 				modelPessoa.setParentesco(parentesco);
-
 				pessoaServlet.listaPessoas.add(modelPessoa);
-
-				/*
-				 * System.out.println("Id: " + id); 
-				 * System.out.println("Nome: " + nome);
-				 * System.out.println("sobrenome: " + sobrenome); 
-				 * System.out.println("N1: " + numero1); 
-				 * System.out.println("N2: " + numero2); 
-				 * System.out.println("N3: " + numero3); 
-				 * System.out.println("parentesco: " + parentesco );
-				 * System.out.println("Data de nascimento: " + dataNascimento);
-				 */
-
 			}
 			stm.close();
 			conn.close();
@@ -152,7 +135,6 @@ public class ConexaoMySQL {
 			ResultSet rs = stm.executeQuery("SELECT * FROM tbAgenda where id="+indice);
 
 			while (rs.next()) {
-				
 				String nome = rs.getString("nome");
 				String sobrenome = rs.getString("sobrenome");
 				String dataNascimento = rs.getString("dataNac");
@@ -169,7 +151,6 @@ public class ConexaoMySQL {
 				modelPessoaIndice.setNumero2(numero2);
 				modelPessoaIndice.setNumero3(numero3);
 				modelPessoaIndice.setParentesco(parentesco);
-
 			}
 			stm.close();
 			conn.close();
@@ -177,8 +158,6 @@ public class ConexaoMySQL {
 		} catch (SQLException e) {
 			System.out.println("Erro ao conectar com o banco de dados");
 		}
-		
-		
 		return null;
 	}
 	
@@ -203,10 +182,7 @@ public class ConexaoMySQL {
 					+ " parentesco='"+modelPessoaIndice.getParentesco()+"'"
 					+ " where id = "+modelPessoaIndice.getId()+";";
             
-			System.out.println(sql);
 			stm.executeUpdate(sql); 
-			
-			
 			stm.close();
 			conn.close();
 

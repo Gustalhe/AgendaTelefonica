@@ -8,10 +8,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-	<style type="text/css">
 	
-	
-	/* Todos os elementos da página */
+
+<style type="text/css">	
+/* Todos os elementos da página */
 *{
     margin: 0;
     padding: 0;
@@ -24,7 +24,6 @@
     padding-top: 2%;
     animation-name: fadebotao;
     animation-duration: 2s;
-    
 } 
 
 
@@ -51,6 +50,7 @@ table, td {
      border: 2px solid rgb(90, 90, 90);
 }
 tr:nth-child(even) {background-color: #f2f2f2}
+
 td{
 	padding: 5px;
 }
@@ -91,8 +91,6 @@ input, select, textarea, button {
 /* Elementos de classe "grupo" nos estados das pseudoclasses "before" e "after" */
 .grupo:before, .grupo:after {
     display: table;
-    
-
 }
 
 /* Elementos de classe "grupo" no estado da pseudoclasse "after" */
@@ -251,17 +249,10 @@ fieldset.grupo .campo {
         opacity: 1;      
     }
 }
-
-	
-	
-	
-	
 	
 	</style>
 	
-	
-	
-	
+
 	
 	<title>Agenda Telefônica</title>
 
@@ -393,10 +384,9 @@ fieldset.grupo .campo {
 	if(request.getAttribute("cadastros") != null){
 		List<ModelPessoa> lista = (List<ModelPessoa>)request.getAttribute("cadastros");	
 		
-		
 		for(ModelPessoa mp: lista){
+			
 			if(lista != null){
-							
 				out.print("<tr>"+ 
 							"<td> <a  href='editar?act=editar&i="+mp.getId()+"'> <edt> Editar </edt></a></td>"+ 
 							"<td> <a  href='javascript:confirmar("+mp.getId()+")'> <exc> X </exc></a></td>"+ 
@@ -407,11 +397,10 @@ fieldset.grupo .campo {
 							"<td>"+mp.getNumero1()+"</td>"+
 							"<td>"+mp.getNumero2()+"</td>"+
 							"<td>"+mp.getNumero3()+"</td>"+
-							"</tr>");		
+						"</tr>");		
 			}
 		}
 	}else{
-		
 	}
 	
 	
