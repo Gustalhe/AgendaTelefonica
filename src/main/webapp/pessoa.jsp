@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	<style type="text/css">
 	
+	
 	/* Todos os elementos da página */
 *{
     margin: 0;
@@ -98,6 +99,15 @@ input, select, textarea, button {
     
     
 }
+exc{
+	cursor: pointer;
+	color: #002b7a
+}
+
+exc:hover{
+	color: #FF0000;
+}
+
 
 /* Elementos de classe "campo" */
 .campo {
@@ -185,7 +195,7 @@ fieldset.grupo .campo {
     text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     position: absolute;
     top: 42%;
-    left: 67%;
+    left: 72%;
     animation-name: fadebotao;
     animation-duration: 3s;
     margin-right: -50%;
@@ -242,9 +252,23 @@ fieldset.grupo .campo {
 	
 	
 	
-	
 	<title>Agenda Telefônica</title>
+
+<script>
+	function confirmar(pi){
+		if(window.confirm("Confirma a exclusão?")){
+			location.href="excluir?i="+pi;	
+		}			
+	}		
+					
+</script>
+
+
+	
 </head>
+
+
+
 
 <body>
 
@@ -317,6 +341,7 @@ fieldset.grupo .campo {
 
 	<table border="1">
 				<tr> 
+					<td><strong> Excluir: </strong></td>
 					<td><strong> Nome: </strong></td>
 					<td><strong>Sobrenome: </strong></td>
 					<td><strong>Data de nascimento: </strong></td>
@@ -328,6 +353,9 @@ fieldset.grupo .campo {
 
 
 
+
+
+				
     
     
 
@@ -344,6 +372,7 @@ fieldset.grupo .campo {
 			if(lista != null){
 							
 				out.print("<tr>"+ 
+							"<td> <a href='javascript:confirmar("+mp.getId()+")'> <exc> X </exc></a></td>"+ 
 							"<td>"+mp.getNome()+"</td>"+ 
 							"<td>"+mp.getSobrenome()+"</td>"+ 
 							"<td>"+mp.getDataNascimento()+"</td>"+
@@ -351,7 +380,7 @@ fieldset.grupo .campo {
 							"<td>"+mp.getNumero1()+"</td>"+
 							"<td>"+mp.getNumero2()+"</td>"+
 							"<td>"+mp.getNumero3()+"</td>"+
-						"</tr>");		
+							"</tr>");		
 			}
 		}
 	}else{

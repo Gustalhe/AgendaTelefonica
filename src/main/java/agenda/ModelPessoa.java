@@ -4,12 +4,20 @@ import java.util.Date;
 
 public class ModelPessoa {
 
+	private int id;
 	private String nome;
 	private String sobrenome;
 	private String dataNascimento;
 	private String numero1;
 	private String numero2;
 	private String numero3;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	private String parentesco;
 	
 
